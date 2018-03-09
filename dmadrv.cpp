@@ -89,9 +89,9 @@ void axiDMA::setRxLen(uint32_t len)
 }
 void axiDMA::beginTx()
 {
-  map->s2mm_dmacr = map-> s2mm_dmacr | 1;
+  map->s2mm_dmacr = map->s2mm_dmacr | 1;
 }
 void axiDMA::beginRx()
 {
-  map->mm2s_dmacr = map-> mm2s_dmacr | 1;
+  map->mm2s_dmacr = map->mm2s_dmacr | 1;
 }

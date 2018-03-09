@@ -28,10 +28,10 @@ struct dmaMap
 class axiDMA
 {
   dmaMap *map;
-  uint32_t rxBufSize;
-  uint32_t txBufSize;
 
   public:
+  uint32_t rxBufSize;
+  uint32_t txBufSize;
     uint32_t *rxBuf; 
     uint32_t *txBuf;
     axiDMA(char *uioDev, char *rxBufDev,  uint64_t dst, uint32_t myRxBufSize, char *txBufDev, uint64_t src, uint32_t myTxBufSize);

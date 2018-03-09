@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-  uint32_t pattern = 0xdeadbeef;
+  uint32_t pattern = 0xfeedbeef;
   uint32_t lenWords = 65536/4;
   uint64_t udma0Addr, udma1Addr;
 
@@ -24,7 +24,10 @@ int main()
   udma0AddrFile >> hex >> udma0Addr;
   udma1AddrFile >> hex >> udma1Addr;
   udma1AddrFile >> hex >> udma1Addr;
+  
 
+  cout << "enter a pattern >";
+  cin >> hex >> pattern;
   cout << "sizeof(dmaMap) = " << hex << "0x" << sizeof(dmaMap) << endl;
    
   if(!udma0AddrFile.is_open() || !udma1AddrFile.is_open()) 
@@ -39,14 +42,17 @@ int main()
   {
     myDMA.txBuf[i] = pattern;
   }
- 
-  cout << "txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
-
+  msync(myDMA.txBuf, myDMA.txBufSize, MS_SYNC);
+  cout << "wrote data txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
   myDMA.beginRx();
+  cout << "beginrx txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
   myDMA.beginTx();
+  cout << "begintx txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
   myDMA.setRxLen(256);
+  cout << "setrxlen txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
   myDMA.setTxLen(256);
-  sleep(1);
-  cout << "txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
+  sleep(1); 
+  cout << "settxlen txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
+
 	
 }
