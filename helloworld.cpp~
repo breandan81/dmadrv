@@ -19,10 +19,10 @@ int main()
 
   cout << "txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
 
-  myDMA.beginRx();
-  myDMA.beginTx();
   myDMA.setTxLen(65536);
   myDMA.setRxLen(65536);
+  myDMA.beginRx();
+  myDMA.beginTx();
   sleep(1);
   cout << "txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
 	
