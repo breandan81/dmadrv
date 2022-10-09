@@ -11,15 +11,18 @@ struct dmaMap
 {
   uint32_t mm2s_dmacr;
   uint32_t mm2s_dmasr;
-  uint32_t pad[3];
+  uint32_t pad[4];
   uint32_t mm2s_sa_lsb;
   uint32_t mm2s_sa_msb;
+  uint32_t pad2[2];
   uint32_t mm2s_len;
+  uint32_t pad3;
   uint32_t s2mm_dmacr;
   uint32_t s2mm_dmasr;
-  uint32_t pad2[3];
+  uint32_t pad4[4];
   uint32_t s2mm_da_lsb;
   uint32_t s2mm_da_msb;
+  uint32_t pad5[2];
   uint32_t s2mm_len;
 };
 class axiDMA
@@ -31,7 +34,7 @@ class axiDMA
   public:
     uint32_t *rxBuf; 
     uint32_t *txBuf;
-    axiDMA(char *uioDev, char *rxBufDev, uint32_t myRxBufSize, char *txBufDev, uint32_t myTxBufSize);
+    axiDMA(char *uioDev, char *rxBufDev,  uint64_t dst, uint32_t myRxBufSize, char *txBufDev, uint64_t src, uint32_t myTxBufSize);
     void setDest(uint64_t dest);
     void setSrc(uint64_t src);
     void setTxLen(uint32_t len);
