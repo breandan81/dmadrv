@@ -8,7 +8,7 @@ axiDMA::axiDMA(char *uioDev, char * rxBufDev, uint64_t dst, uint32_t myRxBufSize
   int fd; 
   uint32_t *addr;
 
-  fd = open(uioDev,O_RDWR);
+  fd = open(uioDev,O_RDWR|O_SYNC);
   if(fd == -1)
   {
     cout << "failed to open device" << endl;
@@ -20,7 +20,7 @@ axiDMA::axiDMA(char *uioDev, char * rxBufDev, uint64_t dst, uint32_t myRxBufSize
     cout << "mmap failed";
     exit(1);
   }
-  fd = open(rxBufDev,O_RDWR);
+  fd = open(rxBufDev,O_RDWR | O_SYNC);
   if(fd == -1)
   {
     cout << "failed to open device" << endl;
@@ -32,7 +32,7 @@ axiDMA::axiDMA(char *uioDev, char * rxBufDev, uint64_t dst, uint32_t myRxBufSize
     cout << "mmap failed";
     exit(1);
   }
-  fd = open(txBufDev,O_RDWR);
+  fd = open(txBufDev,O_RDWR | O_SYNC);
   if(fd == -1)
   {
     cout << "failed to open device" << endl;
@@ -59,7 +59,6 @@ void axiDMA::setDest(uint64_t dest)
   map->s2mm_da_msb =  (uint32_t)(dest >> 32);
 
   cout << "dest = 0x" << hex << map->s2mm_da_msb << map->s2mm_da_lsb << endl;
-  msync(map, 65536, MS_SYNC);
 }
 void axiDMA::setSrc(uint64_t src)
 {
@@ -74,7 +73,6 @@ void axiDMA::setSrc(uint64_t src)
   cout << (uint32_t)(src & 0xFFFFFFFF) << endl;
   cout <<  (uint32_t)(src >> 32) << endl;
   cout << "src = 0x" << hex << map->mm2s_sa_msb << map->mm2s_sa_lsb << endl;
-  msync(map, 65536, MS_SYNC);
 }
 void axiDMA::setTxLen(uint32_t len)
 {
@@ -82,22 +80,18 @@ void axiDMA::setTxLen(uint32_t len)
   uint64_t offset = (uint64_t) map;
   cout << "s2mm_len address = " << ((uint64_t) &map->s2mm_len )-offset << endl;
   map->s2mm_len = len;
-  msync(map, 65536, MS_SYNC);
 }
 void axiDMA::setRxLen(uint32_t len)
 {
   uint64_t offset = (uint64_t) map;
   cout << "mm2s_len address = " << ((uint64_t) &map->mm2s_len )-offset << endl;
   map->mm2s_len = len;
-  msync(map, 65536, MS_SYNC);
 }
 void axiDMA::beginTx()
 {
   map->s2mm_dmacr = map->s2mm_dmacr | 1;
-  msync(map, 65536, MS_SYNC);
 }
 void axiDMA::beginRx()
 {
   map->mm2s_dmacr = map->mm2s_dmacr | 1;
-  msync(map, 65536, MS_SYNC);
 }

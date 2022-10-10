@@ -42,19 +42,18 @@ int main()
   {
     myDMA.txBuf[i] = pattern;
   }
+  int nothing;
   msync(myDMA.txBuf, myDMA.txBufSize, MS_SYNC);
   cout << "wrote data txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
   myDMA.beginTx();
-  sleep(1);
   cout << "begintx txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
   myDMA.beginRx();
-  sleep(1);
   cout << "beginrx txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
   myDMA.setTxLen(65536);
-  sleep(1); 
+ // cin >>  nothing;
   cout << "settxlen txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
   myDMA.setRxLen(65536);
-  sleep(1);
+ // cin >> nothing;
   cout << "setrxlen txBuf[0] = " << myDMA.txBuf[0] << " rxBuf[0]= "<< myDMA.rxBuf[0] << endl;
 
 	
